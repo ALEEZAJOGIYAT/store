@@ -3,7 +3,7 @@ import {Container, Nav, Navbar } from "react-bootstrap";
 import {Button} from '@mui/material'
 import Lottie from 'react-lottie'
 import animationData from '../../lotties/header.json'
-
+import { CreateStore } from "../../containers/Store Manager/CreateStore";
 
 // import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
@@ -127,7 +127,7 @@ const role='storeCreator'
         </Container>
       </Navbar>
 
-      {/* <PostJob open={open} toggleModal={toggleModal} /> */}
+      <CreateStore open={open} toggleModal={toggleModal} />
     </div>
   );
 };

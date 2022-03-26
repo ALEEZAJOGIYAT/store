@@ -27,6 +27,7 @@ export const Home=()=>{
           style={{
             display: "flex",
             flexDirection: "initial",
+            
           }}
         >
           <Lottie

@@ -109,6 +109,7 @@ const RegistrationForm = () => {
 
         <Paper
           sx={{
+            my: { xs: 3, md: 6 },
             fontSize:4,
             boxShadow: 4,
             p: 5,
