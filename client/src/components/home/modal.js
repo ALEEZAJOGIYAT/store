@@ -17,7 +17,7 @@ const style = {
   p: 4,
 };
 
-export function BasicModal() {
+export function BasicModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -34,7 +34,7 @@ export function BasicModal() {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>Cretae Store</Button>
+      <Button variant="contained" sx={{backgroundColor:'rgb(31, 31, 32)',fontWeight:800 , display:'flex',m:2}} onClick={handleOpen}>{props.name}</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -45,18 +45,18 @@ export function BasicModal() {
           {/* <Typography id="modal-modal-title" variant="h6" component="h2">
             Text in a modal
           </Typography> */}
-          <Typography id="modal-modal-description"
+          <Typography id="modal-modal-description" variant='h6'
            //sx={{ mt: 2 }}
            >
             Do you have an account?
           </Typography>
-          <Button variant='contained' sx={{marginTop:3}}
+          <Button variant='contained' size='small' sx={{marginTop:3,marginLeft:6}}
           onClick={handleYes} >
               Yes
           </Button>
-          <Button  variant='contained'
+          <Button  variant='contained' size='small'
           onClick={handleNo}
-            sx={{marginLeft:5,marginTop:3}}>No</Button>
+            sx={{marginLeft:1,marginTop:3}}>No</Button>
 
         </Box>
       </Modal>

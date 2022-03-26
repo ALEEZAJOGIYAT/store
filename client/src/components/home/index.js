@@ -5,8 +5,7 @@ import Paper from "@mui/material/Paper";
 import Lottie from 'react-lottie'
 import animationData from '../../lotties/shopping.json'
 import Typewriter from 'typewriter-effect'
-import {BasicModal} from './createstoremodal'
-import { ProductModal } from './buyprodmodal';
+import {BasicModal} from './modal'
 // import './style.scss'
 // import '../../images/'
 
@@ -64,8 +63,11 @@ export const Home=()=>{
               marginLeft:700
 
 }}>
-               <BasicModal/>
-               <ProductModal/>
+               <BasicModal
+               name={'Create Store'}/>
+              <BasicModal
+               name={'Buy Product'}/>
+
           </div>
             </Container>
 
