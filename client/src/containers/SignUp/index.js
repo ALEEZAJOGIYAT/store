@@ -4,22 +4,21 @@ import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import FormControl from '@mui/material/FormControl';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
+import FormControl from "@mui/material/FormControl";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
 
 // import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 // import { ThemeProvider, createTheme } from "@material-ui/core/styles";
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import { useTheme } from '@mui/material/styles';
-import axios from 'axios'
-import Lottie from 'react-lottie'
-import animationData from '../../lotties/sign-up.json'
-
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
+import { useTheme } from "@mui/material/styles";
+import axios from "axios";
+import Lottie from "react-lottie";
+import animationData from "../../lotties/sign-up.json";
 
 const RegistrationForm = () => {
   const theme = useTheme();
@@ -29,16 +28,15 @@ const RegistrationForm = () => {
   // const[role,setRole]=useState('')
 
   const [Input, setInput] = useState({
-    "cnincNo": "",
-    "firstName": "",
-    "lastName": "",
-    "email": "",
-    "address": "",
-    "phoneNo": "",
-    "password":"",
-    "role":''
-    
-  })
+    cnincNo: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    address: "",
+    phoneNo: "",
+    password: "",
+    role: "",
+  });
   // function getStyles(name, personName, theme) {
   //   return {
   //     fontWeight:
@@ -50,38 +48,38 @@ const RegistrationForm = () => {
 
   // const handleRadio=(e)=>{
   //   setRole(e.target.value)
-    
+
   // }
 
   const handleChange = (event) => {
-    console.log({ [event.target.name]: event.target.value })
-    setInput({ ...Input, [event.target.name]: event.target.value })
+    console.log({ [event.target.name]: event.target.value });
+    setInput({ ...Input, [event.target.name]: event.target.value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('data',Input)
-    alert("submit Successfully")
+    console.log("data", Input);
+    alert("submit Successfully");
 
-    axios.post("http://localhost:4001/add",{
-      cnincNo:Input.cnicNo ,
-      firstName:Input.firstName ,
+    axios.post("http://localhost:4001/add", {
+      cnincNo: Input.cnicNo,
+      firstName: Input.firstName,
       lastName: Input.lastName,
-      email:Input.email,
+      email: Input.email,
       address: Input.password,
       phoneNo: Input.phoneNo,
-      password:Input.password,
-      role:Input.role
-    })
+      password: Input.password,
+      role: Input.role,
+    });
     setInput({
-        "cnincNo": "",
-        "firstName": "",
-        "lastName": "",
-      "email": "",
-      "address": "",
-      "phoneNo": "",
-      "password":"", 
-    })
-  }
+      cnincNo: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      address: "",
+      phoneNo: "",
+      password: "",
+    });
+  };
 
   const defaultOptions = {
     loop: true,
@@ -92,17 +90,9 @@ const RegistrationForm = () => {
     },
   };
 
-
-
   return (
-    <div 
-  >
-    
-      <Container 
-      sx={{ my: "3rem",backgroundColor:'rgb(17, 54, 63)'}}
-  
-      >
-        
+    <div>
+      <Container sx={{ my: "3rem", backgroundColor: "rgb(17, 54, 63)" }}>
         {/* <div className="image">
           <img src="./images/aretec.png" alt="logo" />
         </div> */}
@@ -110,10 +100,10 @@ const RegistrationForm = () => {
         <Paper
           sx={{
             my: { xs: 3, md: 6 },
-            fontSize:4,
+            fontSize: 4,
             boxShadow: 4,
             p: 5,
-//            paddingTop:3,
+            //            paddingTop:3,
             margin: "auto",
             maxWidth: 500,
             // flexGrow: 1,
@@ -122,15 +112,15 @@ const RegistrationForm = () => {
           }}
           elevation={3}
         >
-
-          <Typography variant="h5" component="h2" textAlign="center" sx={{ fontWeight: 'bolder' }}>
-             Registration Form
+          <Typography
+            variant="h5"
+            component="h2"
+            textAlign="center"
+            sx={{ fontWeight: "bolder" }}
+          >
+            Registration Form
           </Typography>
-          <Lottie
-            options={defaultOptions}
-            height={120}
-            width={100}
-          />
+          <Lottie options={defaultOptions} height={120} width={100} />
           <br />
           <br />
 
@@ -153,19 +143,19 @@ const RegistrationForm = () => {
           <br /> */}
           <form onSubmit={handleSubmit}>
             <FormControl fullWidth>
-                <TextField
-                  required
-                  id="standard-password-input"
-                  label="CNIC NO"
-                  type="text"
-                  autoComplete="current-text"
-                  variant="standard"
-                  margin="normal"
-                  value={Input.cnicNo}
-                  name="cnicNo"
-                  onChange={handleChange}
-                />
-                <TextField
+              <TextField
+                required
+                id="standard-password-input"
+                label="CNIC NO"
+                type="text"
+                autoComplete="current-text"
+                variant="standard"
+                margin="normal"
+                value={Input.cnicNo}
+                name="cnicNo"
+                onChange={handleChange}
+              />
+              <TextField
                 required
                 id="standard-password-input"
                 label="First Name"
@@ -201,8 +191,8 @@ const RegistrationForm = () => {
                 value={Input.email}
                 name="email"
                 onChange={handleChange}
-              /> 
-               <TextField
+              />
+              <TextField
                 required
                 id="standard-password-input"
                 label="Password"
@@ -238,34 +228,50 @@ const RegistrationForm = () => {
                 value={Input.address}
                 name="address"
                 onChange={handleChange}
-              /><br /><br />
-                 <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label" 
-      //sx={{marginLeft:-50}}
-      >Role</FormLabel>
-      <RadioGroup
-      // value={role}
-      onChange={handleChange}
-        row
-        aria-labelledby="demo-row-radio-buttons-group-label"
-        name="row-radio-buttons-group"
-      >
-        <FormControlLabel value="Customer" control={<Radio />} label="Customer" />
-        <FormControlLabel value="Store Creator" control={<Radio />} label="Store Creator" />
-        {/* <FormControlLabel value="other" control={<Radio />} label="Other" /> */}
-      </RadioGroup>
-    </FormControl>
-              <Button variant="contained" type="submit"
-              sx={{
-                marginTop:5,
-                width:150,
-                display:'flex',
-                marginLeft:20,
-                backgroundColor:'rgb(30, 31, 31)'
-                }} >
+              />
+              <br />
+              <br />
+              <FormControl>
+                <FormLabel
+                  id="demo-row-radio-buttons-group-label"
+                  //sx={{marginLeft:-50}}
+                >
+                  Role
+                </FormLabel>
+                <RadioGroup
+                  // value={role}
+                  onChange={handleChange}
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="Customer"
+                    control={<Radio />}
+                    label="Customer"
+                  />
+                  <FormControlLabel
+                    value="Store Creator"
+                    control={<Radio />}
+                    label="Store Creator"
+                  />
+                  {/* <FormControlLabel value="other" control={<Radio />} label="Other" /> */}
+                </RadioGroup>
+              </FormControl>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{
+                  marginTop: 5,
+                  width: 150,
+                  display: "flex",
+                  marginLeft: 20,
+                  backgroundColor: "rgb(30, 31, 31)",
+                }}
+              >
                 Register
               </Button>
-           </FormControl>
+            </FormControl>
           </form>
         </Paper>
       </Container>
