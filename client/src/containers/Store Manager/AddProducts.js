@@ -10,6 +10,7 @@ import { Box } from "@mui/material";
 // import TextField from '@mui/material/TextField';
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { Theme } from "../../components/theme";
 
 export const AddProduct = () => {
   const [productData, setProductData] = useState({
@@ -50,6 +51,7 @@ export const AddProduct = () => {
 
   return (
     <>
+    <Theme/>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         {/* <div
           style={{

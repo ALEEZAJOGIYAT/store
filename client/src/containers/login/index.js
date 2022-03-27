@@ -21,64 +21,26 @@ import Lottie from "react-lottie";
 import animationData from "../../lotties/sign-up.json";
 import { Theme } from "../../components/theme";
 
-const RegistrationForm = () => {
-  const theme = useTheme();
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-
-  // const[role,setRole]=useState('')
-
-  const [Input, setInput] = useState({
-    cnincNo: "",
-    firstName: "",
-    lastName: "",
+export const LoginForm = () => {
+  const [Data, setData] = useState({
     email: "",
-    address: "",
-    phoneNo: "",
     password: "",
     role: "",
   });
-  // function getStyles(name, personName, theme) {
-  //   return {
-  //     fontWeight:
-  //       personName.indexOf(name) === -1
-  //         ? theme.typography.fontWeightRegular
-  //         : theme.typography.fontWeightMedium,
-  //   };
-  // }
-
-  // const handleRadio=(e)=>{
-  //   setRole(e.target.value)
-
-  // }
 
   const handleChange = (event) => {
-    console.log({ [event.target.name]: event.target.value });
-    setInput({ ...Input, [event.target.name]: event.target.value });
+    // console.log({ [event.target.name]: event.target.value });
+    setData({ ...Data, [event.target.name]: event.target.value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("data", Input);
+    console.log("data", Data);
     alert("submit Successfully");
 
-    axios.post("http://localhost:4001/add", {
-      cnincNo: Input.cnicNo,
-      firstName: Input.firstName,
-      lastName: Input.lastName,
-      email: Input.email,
-      address: Input.password,
-      phoneNo: Input.phoneNo,
-      password: Input.password,
-      role: Input.role,
-    });
-    setInput({
-      cnincNo: "",
-      firstName: "",
-      lastName: "",
+    setData({
       email: "",
-      address: "",
-      phoneNo: "",
       password: "",
+      role:''
     });
   };
 
@@ -93,11 +55,11 @@ const RegistrationForm = () => {
 
   return (
     <div>
-      <Theme/>
+      <Theme />
       <Container
-      maxWidth="sm" sx={{ mb: 4,
-        backgroundColor: "rgb(17, 54, 63)" }}
-        >
+        maxWidth="sm"
+        sx={{ mb: 4, backgroundColor: "rgb(17, 54, 63)" }}
+      >
         {/* <div className="image">
           <img src="./images/aretec.png" alt="logo" />
         </div> */}
@@ -107,15 +69,9 @@ const RegistrationForm = () => {
             fontSize: 4,
             boxShadow: 4,
             my: { xs: 3, md: 6 },
-             p: { xs: 2, md: 3 },
-            // my: { xs: 3, md: 6 },
-            // p: 5,
-            //            paddingTop:3,
+            p: { xs: 2, md: 3 },
             margin: "auto",
             maxWidth: 500,
-            // flexGrow: 1,
-            // backgroundColor: (theme) =>
-            //   theme.palette.mode === "dark" ? "red" : "#fff",
           }}
           elevation={3}
         >
@@ -125,117 +81,52 @@ const RegistrationForm = () => {
             textAlign="center"
             sx={{ fontWeight: "bolder" }}
           >
-            Registration Form
+            Login In Here
           </Typography>
           <Lottie options={defaultOptions} height={120} width={100} />
           <br />
           <br />
 
-          {/* <span>
-            <Typography>
-              Contact:
-              <a href="mailto:stars3@aretecinc.com"> stars3@aretecinc.com </a>
-            </Typography>
-            <Typography>Contact Number: 47QTCB22D0173</Typography>
-          </span>
-          <br />
-          <br /> */}
-          {/* <Typography variant="body2" sx={{ fontWeight: 'bolder' }}>
-            Aretac approval of Pricing, Staffing and participation in white
-            glove review will always be required
-
-          </Typography>
-          <br />
-          <br />
-          <br /> */}
           <form onSubmit={handleSubmit}>
             <FormControl fullWidth>
-              <TextField
+              {/* <TextField
                 required
-                id="standard-password-input"
+                id="standard-password-Data"
                 label="CNIC NO"
                 type="text"
                 autoComplete="current-text"
                 variant="standard"
                 margin="normal"
-                value={Input.cnicNo}
+                value={Data.cnicNo}
                 name="cnicNo"
                 onChange={handleChange}
-              />
-              <TextField
-                required
-                id="standard-password-input"
-                label="First Name"
-                type="text"
-                autoComplete="current-text"
-                variant="standard"
-                margin="normal"
-                value={Input.firstName}
-                name="firstName"
-                onChange={handleChange}
-              />
-              <TextField
-                required
-                id="standard-password-input"
-                label="Last Name"
-                type="text"
-                autoComplete="current-text"
-                variant="standard"
-                margin="normal"
-                value={Input.lastName}
-                name="lastName"
-                onChange={handleChange}
-              />
+              /> */}
 
               <TextField
                 required
-                id="standard-password-input"
+                id="standard-password-Data"
                 label="Email"
                 type="text"
                 autoComplete="current-email"
                 variant="standard"
                 margin="normal"
-                value={Input.email}
+                value={Data.email}
                 name="email"
                 onChange={handleChange}
               />
               <TextField
                 required
-                id="standard-password-input"
+                id="standard-password-Data"
                 label="Password"
                 type="text"
                 autoComplete="current-text"
                 variant="standard"
                 margin="normal"
-                value={Input.password}
+                value={Data.password}
                 name="password"
                 onChange={handleChange}
               />
 
-              <TextField
-                required
-                id="standard-password-input"
-                label="Mobile Number"
-                type="text"
-                autoComplete="current-text"
-                variant="standard"
-                margin="normal"
-                value={Input.phoneNo}
-                name="phoneNo"
-                onChange={handleChange}
-              />
-              <TextField
-                required
-                id="standard-password-input"
-                label="Address"
-                type="text"
-                autoComplete="current-text"
-                variant="standard"
-                margin="normal"
-                value={Input.address}
-                name="address"
-                onChange={handleChange}
-              />
               <br />
               <br />
               <FormControl>
@@ -276,7 +167,7 @@ const RegistrationForm = () => {
                   backgroundColor: "rgb(30, 31, 31)",
                 }}
               >
-                Register
+                LogIn
               </Button>
             </FormControl>
           </form>
@@ -285,5 +176,3 @@ const RegistrationForm = () => {
     </div>
   );
 };
-
-export default RegistrationForm;
