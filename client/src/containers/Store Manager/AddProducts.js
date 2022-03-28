@@ -1,32 +1,41 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+//import CameraIcon from '@mui/icons-material/PhotoCamera';
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Button, Divider, TextField } from "@mui/material";
-import { Container } from "@mui/material";
-import { Paper } from "@mui/material";
+import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Lottie from "react-lottie";
-import animationData from "../../lotties/add-products.json";
-import { Box } from "@mui/material";
-// import TextField from '@mui/material/TextField';
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { Theme } from "../../components/theme";
+import animationData from "../../lotties/header.json";
 
-export const AddProduct = () => {
-  const [productData, setProductData] = useState({
-    productName: "",
-    productPrice: "",
-    productDetails: "",
-  });
+function Copyright() {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  useEffect(() => {
-    if (selectedImage) {
-      setImageUrl(URL.createObjectURL(selectedImage));
-    }
-  }, [selectedImage]);
+const theme = createTheme();
+
+export const ShowProduct = () => {
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -36,136 +45,91 @@ export const AddProduct = () => {
     },
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setProductData({
-      productName: "",
-      productPrice: "",
-      productDetails: "",
-    });
-  };
-
-  const handleChange = (e) => {
-    setProductData = { ...productData, [e.target.name]: [e.target.value] };
-  };
-
   return (
-    <>
-    <Theme/>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        {/* <div
-          style={{
-            display: "flex",
-            flexDirection: "initial",
-            
-          }}
-        >
-          <Lottie
-            style={{ marginTop: 12 }}
-            options={defaultOptions}
-            height={100}
-            width={100}
-          />
-          </div> */}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppBar position="relative" sx={{ backgroundColor: "rgb(28, 28, 29)" }}>
+        <Toolbar>
+          {/* <CameraIcon sx={{ mr: 2 }} /> */}
+          <Lottie options={defaultOptions} height={50} width={50} />
 
-        <Paper
-          variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
-        >
-          <Typography variant="h6" gutterBottom>
-            Product Details
+          {/* <Typography variant="h6" color="inherit" noWrap>
+            Products of The Store
+          </Typography> */}
+        </Toolbar>
+      </AppBar>
+      <main>
+        {/* Hero unit */}
+        <Container sx={{ py: 8 }} maxWidth="md">
+          <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            color="text.primary"
+            gutterBottom
+          >
+            All Products
           </Typography>
-          <Divider />
           <br />
           <br />
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                sx={{ width: "200%" }}
-                required
-                id="outlined-required"
-                label="Product Name"
-                name="productName"
-                value={productData.productName}
-                onChange={handleChange}
-              />
-
-              <br />
-              <br />
-              <TextField
-                sx={{ width: "200%" }}
-                required
-                id="outlined-required"
-                label="Details"
-                name="detail"
-                value={productData.productDetails}
-                onChange={handleChange}
-              />
-              <br />
-              <br />
-              <TextField
-                sx={{ width: "200%" }}
-                required
-                id="outlined-required"
-                type="number"
-                label="Price"
-                name="price"
-                value={productData.productPrice}
-                onChange={handleChange}
-              />
-              <br />
-              <br />
-
-              <div>
-                <input
-                  accept="image/*"
-                  type="file"
-                  id="select-image"
-                  style={{ display: "none" }}
-                  onChange={(e) => setSelectedImage(e.target.files[0])}
-                />
-                <label htmlFor="select-image">
-                  <Button
-                   variant="contained"  
-                   component="span"
-                      sx={{
-                        //marginLeft: 25,
-                        backgroundColor: "rgb(22, 128, 128)",
-                        width: "350%",
-                        fontWeight:800
-                      }}>
-                    Upload Image
-                  </Button>
-                </label>
-                {imageUrl && selectedImage && (
-                  <Box mt={2} textAlign="center">
-                    <div>Image Preview:</div>
-                    <img
-                      src={imageUrl}
-                      alt={selectedImage.name}
-                      height="100px"
-                    />
-                  </Box>
-                )}
-              </div>
-              <br/>
-              <br/>
-              <Button
-                variant="contained"
-                size="medium"
-                onClick={handleSubmit}
-                sx={{
-                  marginLeft: 50,
-                  backgroundColor: "rgb(43, 46, 46)",
-                  width: "45%",
-                }}
-              >
-                Add Item
-              </Button>
-            </Grid>
+          <br />
+          {/* End hero unit */}
+          <Grid container spacing={4}>
+            {cards.map((card) => (
+              <Grid item key={card} xs={12} sm={6} md={4}>
+                <Card
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    sx={
+                      {
+                        // 16:9
+                        //                      pt: '56.25%',
+                      }
+                    }
+                    image="https://source.unsplash.com/random"
+                    alt="random"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Heading
+                    </Typography>
+                    <Typography>
+                      This is a media card. You can use this section to describe
+                      the content.
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">View</Button>
+                    <Button size="small">Edit</Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        </Paper>
-      </Container>
-    </>
+        </Container>
+      </main>
+      {/* Footer */}
+      <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
+        <Typography variant="h6" align="center" gutterBottom>
+          Footer
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Something here to give the footer a purpose!
+        </Typography>
+        <Copyright />
+      </Box>
+      {/* End footer */}
+    </ThemeProvider>
   );
 };

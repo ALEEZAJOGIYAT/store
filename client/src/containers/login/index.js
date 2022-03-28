@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // import Grid from "@mui/material/Grid";
 // import * as startOfDay from 'date-fns/startofday';
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 
@@ -22,27 +22,56 @@ import animationData from "../../lotties/sign-up.json";
 import { Theme } from "../../components/theme";
 
 export const LoginForm = () => {
-  const [Data, setData] = useState({
+  const [data, setData] = useState({
     email: "",
     password: "",
-    role: "",
+    cnicNo: "",
   });
 
   const handleChange = (event) => {
     // console.log({ [event.target.name]: event.target.value });
-    setData({ ...Data, [event.target.name]: event.target.value });
+    setData({ ...data, [event.target.name]: event.target.value });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("data", Data);
-    alert("submit Successfully");
+    console.log("data", data);
+    // alert("submit Successfully");
+    // ali123
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      axios.post(
+        "http://localhost:4001/user/login",
+        {
+          email: data.email,
+          password: data.password,
+//          cnicNo: data.cnicNo,
+        },
+        config
+      );
+
+      //      localStorage.setData("userInfo", JSON.stringify(data));
+    } catch (err) {
+      console.log(err,'error')
+    }
 
     setData({
       email: "",
       password: "",
-      role:''
+      // cnicNo: "",
     });
   };
+
+  useEffect(() => {
+    axios.get("http://localhost:4001/user/role").then((response)=>{
+      console.log(response)
+    })
+  }, []);
+
 
   const defaultOptions = {
     loop: true,
@@ -97,10 +126,12 @@ export const LoginForm = () => {
                 autoComplete="current-text"
                 variant="standard"
                 margin="normal"
-                value={Data.cnicNo}
+                value={data.cnicNo}
                 name="cnicNo"
                 onChange={handleChange}
               /> */}
+              <br />
+              <br />
 
               <TextField
                 required
@@ -110,7 +141,7 @@ export const LoginForm = () => {
                 autoComplete="current-email"
                 variant="standard"
                 margin="normal"
-                value={Data.email}
+                value={data.email}
                 name="email"
                 onChange={handleChange}
               />
@@ -122,14 +153,14 @@ export const LoginForm = () => {
                 autoComplete="current-text"
                 variant="standard"
                 margin="normal"
-                value={Data.password}
+                value={data.password}
                 name="password"
                 onChange={handleChange}
               />
 
               <br />
               <br />
-              <FormControl>
+              {/* <FormControl>
                 <FormLabel
                   id="demo-row-radio-buttons-group-label"
                   //sx={{marginLeft:-50}}
@@ -153,9 +184,8 @@ export const LoginForm = () => {
                     control={<Radio />}
                     label="Store Creator"
                   />
-                  {/* <FormControlLabel value="other" control={<Radio />} label="Other" /> */}
                 </RadioGroup>
-              </FormControl>
+              </FormControl> */}
               <Button
                 variant="contained"
                 type="submit"

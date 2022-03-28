@@ -1,30 +1,28 @@
 import React, { useState } from "react";
-import {Container, Nav, Navbar } from "react-bootstrap";
-import {Button} from '@mui/material'
-import Lottie from 'react-lottie'
-import animationData from '../../lotties/header.json'
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { Button } from "@mui/material";
+import Lottie from "react-lottie";
+import animationData from "../../lotties/header.json";
 import { CreateStore } from "../../containers/Store Manager/CreateStore";
 
 // import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 // import PostJob from "../Pages/storeCreator/PostJob";
 
-
 export const NavBar = () => {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-        rendererSettings: {
-          preserveAspectRatio: "xMidYMid slice",
-        },
-      };
-    
-//   const state = useSelector((state) => state);
-//   const auth = state.auth;
-const role='storeCreator'
-//   const role = auth?.users?.role;
+  //   const state = useSelector((state) => state);
+  //   const auth = state.auth;
+  const role = "storeCreator";
+  //   const role = auth?.users?.role;
 
   const [open, setOpen] = useState(false);
 
@@ -48,23 +46,27 @@ const role='storeCreator'
       name: "Stores",
     },
     {
+      to: "./product",
+      name: "Products",
+    },
+    {
       to: "./profile",
       name: "Profile",
     },
   ];
   const customer = [
     {
-      to: "./companies",
-      name: "Companies",
+      to: "./dashboard",
+      name: "Stores",
     },
     {
-      to: "./alljobs",
-      name: "All Jobs",
+      to: "./purchaseproducts",
+      name: "Purchased Products",
     },
-    {
-      to: "./appliedjobs",
-      name: "Applied Jobs",
-    },
+    // {
+    //   to: "./appliedjobs",
+    //   name: "Applied Jobs",
+    // },
     {
       to: "./profile",
       name: "Profile",
@@ -76,12 +78,7 @@ const role='storeCreator'
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="./vacancies">
-          <Lottie
-            options={defaultOptions}
-            height={50}
-            width={50}
-          />
-
+            <Lottie options={defaultOptions} height={50} width={50} />
           </Navbar.Brand>
           <Nav className="me-auto">
             {role === "customer"
@@ -99,24 +96,34 @@ const role='storeCreator'
               : null}
           </Nav>
           {role === "customer" ? (
-            <Button
-              className="buttonlogout"
-              variant="outline-light"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
+            <div>
+              <Button
+                variant="contained"
+                onClick={showModal}
+                sx={{ backgroundColor: "rgb(55, 139, 139) " }}
+              >
+                Cart
+              </Button>
+
+              <Button
+                variant="contained"
+                onClick={showModal}
+                sx={{ backgroundColor: "rgb(55, 139, 139) " }}
+              >
+                Logout
+              </Button>
+            </div>
           ) : role === "storeCreator" ? (
             <>
               <Button
                 variant="contained"
                 onClick={showModal}
-                sx={{backgroundColor:'rgb(55, 139, 139) '}}
+                sx={{ backgroundColor: "rgb(55, 139, 139) " }}
               >
-               Create Store
+                Create Store
               </Button>
               <Button
-              sx={{marginLeft:5,backgroundColor:'rgb(55, 139, 139)' }}
+                sx={{ marginLeft: 5, backgroundColor: "rgb(55, 139, 139)" }}
                 variant="contained"
                 onClick={handleLogout}
               >
@@ -126,9 +133,6 @@ const role='storeCreator'
           ) : null}
         </Container>
       </Navbar>
-
-      <CreateStore open={open} toggleModal={toggleModal} />
     </div>
   );
 };
-

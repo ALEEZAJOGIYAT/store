@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import Grid from "@mui/material/Grid";
 // import * as startOfDay from 'date-fns/startofday';
 import Paper from "@mui/material/Paper";
@@ -20,16 +20,13 @@ import axios from "axios";
 import Lottie from "react-lottie";
 import animationData from "../../lotties/sign-up.json";
 import { Theme } from "../../components/theme";
+import { alignProperty } from "@mui/material/styles/cssUtils";
 
 const RegistrationForm = () => {
   const theme = useTheme();
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-
-  // const[role,setRole]=useState('')
 
   const [Input, setInput] = useState({
-    cnincNo: "",
+    cnicNo: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -38,22 +35,11 @@ const RegistrationForm = () => {
     password: "",
     role: "",
   });
-  // function getStyles(name, personName, theme) {
-  //   return {
-  //     fontWeight:
-  //       personName.indexOf(name) === -1
-  //         ? theme.typography.fontWeightRegular
-  //         : theme.typography.fontWeightMedium,
-  //   };
-  // }
 
-  // const handleRadio=(e)=>{
-  //   setRole(e.target.value)
-
-  // }
+  const [auth,setAuth]=useState('')
 
   const handleChange = (event) => {
-    console.log({ [event.target.name]: event.target.value });
+    // console.log({ [event.target.name]: event.target.value });
     setInput({ ...Input, [event.target.name]: event.target.value });
   };
   const handleSubmit = (e) => {
@@ -61,24 +47,41 @@ const RegistrationForm = () => {
     console.log("data", Input);
     alert("submit Successfully");
 
-    axios.post("http://localhost:4001/add", {
-      cnincNo: Input.cnicNo,
-      firstName: Input.firstName,
-      lastName: Input.lastName,
-      email: Input.email,
-      address: Input.password,
-      phoneNo: Input.phoneNo,
-      password: Input.password,
-      role: Input.role,
-    });
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      axios.post(
+        "http://localhost:4001/user/add",
+        {
+          cnicNo: Input.cnicNo,
+          firstName: Input.firstName,
+          lastName: Input.lastName,
+          email: Input.email,
+          address: Input.address,
+          phoneNo: Input.phoneNo,
+          password: Input.password,
+          role: Input.role,
+        },
+        config
+      );
+
+      //      localStorage.setData("userInfo", JSON.stringify(data));
+    } catch (er) {
+      console.log("er", er);
+    }
+
     setInput({
-      cnincNo: "",
+      cnicNo: "",
       firstName: "",
       lastName: "",
       email: "",
       address: "",
       phoneNo: "",
       password: "",
+      role: "",
     });
   };
 
@@ -91,23 +94,31 @@ const RegistrationForm = () => {
     },
   };
 
+  useEffect(() => {
+    axios.get("http://localhost:4001/user/role").then((response)=>{
+      setAuth(response.data.role)
+      // console.log(response)
+    })
+  }, []);
+
   return (
     <div>
-      <Theme/>
+      <Theme />
       <Container
-      maxWidth="sm" sx={{ mb: 4,
-        backgroundColor: "rgb(17, 54, 63)" }}
-        >
+        maxWidth="sm"
+        sx={{ mb: 4, backgroundColor: "rgb(17, 54, 63)" }}
+      >
         {/* <div className="image">
           <img src="./images/aretec.png" alt="logo" />
         </div> */}
+        <Lottie options={defaultOptions} height={120} width={100} />
 
         <Paper
           sx={{
             fontSize: 4,
             boxShadow: 4,
             my: { xs: 3, md: 6 },
-             p: { xs: 2, md: 3 },
+            p: { xs: 2, md: 3 },
             // my: { xs: 3, md: 6 },
             // p: 5,
             //            paddingTop:3,
@@ -127,27 +138,8 @@ const RegistrationForm = () => {
           >
             Registration Form
           </Typography>
-          <Lottie options={defaultOptions} height={120} width={100} />
           <br />
           <br />
-
-          {/* <span>
-            <Typography>
-              Contact:
-              <a href="mailto:stars3@aretecinc.com"> stars3@aretecinc.com </a>
-            </Typography>
-            <Typography>Contact Number: 47QTCB22D0173</Typography>
-          </span>
-          <br />
-          <br /> */}
-          {/* <Typography variant="body2" sx={{ fontWeight: 'bolder' }}>
-            Aretac approval of Pricing, Staffing and participation in white
-            glove review will always be required
-
-          </Typography>
-          <br />
-          <br />
-          <br /> */}
           <form onSubmit={handleSubmit}>
             <FormControl fullWidth>
               <TextField
@@ -250,7 +242,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
+                  name="role"
                 >
                   <FormControlLabel
                     value="Customer"

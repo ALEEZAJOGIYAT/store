@@ -20,31 +20,23 @@ const registerUser = async (req, res) => {
     throw new Error("User already exits");
   }
 
-  const user = await userModel.create({
-    cnicNo,
-    firstName,
-    lastName,
-    email,
-    address,
-    phoneNo,
-    password,
-    role,
-  });
-
-  if (user) {
-    res.status(201).json({
-      _id: user.id,
-      cnincNo: user.cnicNo,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      address: user.address,
-      phoneNo: user.phoneNo,
-      role: user.role,
+  try {
+    const user = new userModel({
+      cnicNo: cnicNo,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      address: address,
+      phoneNo: phoneNo,
+      password: password,
+      role: role,
     });
-  } else {
-    res.status(400);
-    throw new Error("Page not found");
+
+    await user.save();
+    res.send("inserted");
+    console.log("user aded", user);
+  } catch (err) {
+    console.log(err, "err");
   }
 };
 
@@ -74,4 +66,14 @@ const authUser = async (req, res) => {
   }
 };
 
-module.exports = {registerUser,authUser};
+const Role = (req, res) => {
+  userModel.find({}, (error, result) => {
+    if (error) {
+      res.send(error);
+    }
+
+    res.send(result);
+  });
+};
+
+module.exports = { registerUser, authUser, Role };
