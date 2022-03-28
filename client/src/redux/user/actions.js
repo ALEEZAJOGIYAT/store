@@ -1,10 +1,10 @@
-import { USER_ROLE } from "./actionType";
+import { USERS } from "./actionType";
 
-export const userRole = (role) => {
+export const users = (data) => {
   return {
-    type: USER_ROLE,
+    type: USERS,
     payload: {
-      role: role,
+      data:data
     },
   };
 };

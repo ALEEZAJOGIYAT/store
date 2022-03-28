@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 // import Grid from "@mui/material/Grid";
 // import * as startOfDay from 'date-fns/startofday';
 import Paper from "@mui/material/Paper";
@@ -20,13 +20,23 @@ import axios from "axios";
 import Lottie from "react-lottie";
 import animationData from "../../lotties/sign-up.json";
 import { Theme } from "../../components/theme";
+import { useSelector, useDispatch } from "react-redux";
+import { users } from "../../redux/user/actions";
 
 export const LoginForm = () => {
+  const userData = useSelector((state) => state.addUser);
+
+  // console.log(userData?.data?.data?.role[0])
+
+  const dispatch = useDispatch();
+
   const [data, setData] = useState({
     email: "",
     password: "",
     cnicNo: "",
   });
+
+  // const[auth,setAuth]=useState()
 
   const handleChange = (event) => {
     // console.log({ [event.target.name]: event.target.value });
@@ -49,14 +59,14 @@ export const LoginForm = () => {
         {
           email: data.email,
           password: data.password,
-//          cnicNo: data.cnicNo,
+          //          cnicNo: data.cnicNo,
         },
         config
       );
 
       //      localStorage.setData("userInfo", JSON.stringify(data));
     } catch (err) {
-      console.log(err,'error')
+      console.log(err, "error");
     }
 
     setData({
@@ -64,13 +74,12 @@ export const LoginForm = () => {
       password: "",
       // cnicNo: "",
     });
+    
+    // axios.get("http://localhost:4001/user/role").then((response) => {
+    //   dispatch(users(response.data));
+    //   // console.log(response.data)
+    // });
   };
-
-  useEffect(() => {
-    axios.get("http://localhost:4001/user/role").then((response)=>{
-      console.log(response)
-    })
-  }, []);
 
 
   const defaultOptions = {
@@ -84,6 +93,15 @@ export const LoginForm = () => {
 
   return (
     <div>
+      {userData?.data?.map(({ data, id }, index) => {
+        const { email, role } = data;
+        return (
+          <div>
+            <h4>{email}</h4>
+          </div>
+        );
+      })}
+
       <Theme />
       <Container
         maxWidth="sm"
@@ -203,6 +221,7 @@ export const LoginForm = () => {
           </form>
         </Paper>
       </Container>
+      <div></div>
     </div>
   );
 };

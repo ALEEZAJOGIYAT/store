@@ -1,1 +1,1 @@
-export const USER_ROLE="USER_ROLE"
+export const USERS="USERS"

@@ -36,7 +36,7 @@ const RegistrationForm = () => {
     role: "",
   });
 
-  const [auth,setAuth]=useState('')
+  // const [auth,setAuth]=useState('')
 
   const handleChange = (event) => {
     // console.log({ [event.target.name]: event.target.value });
@@ -94,12 +94,13 @@ const RegistrationForm = () => {
     },
   };
 
-  useEffect(() => {
-    axios.get("http://localhost:4001/user/role").then((response)=>{
-      setAuth(response.data.role)
-      // console.log(response)
-    })
-  }, []);
+  // useEffect(() => {
+  //   axios.get("http://localhost:4001/user/role").then((response)=>{
+
+  //     // setAuth(response.data)
+  //     // console.log(response.data.role,'role')
+  //   })
+  // }, []);
 
   return (
     <div>
