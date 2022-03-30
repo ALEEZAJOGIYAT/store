@@ -1,6 +1,6 @@
 const express = require("express");
 const { registerUser, authUser, Role } = require("../controller/user");
-const {store,storeData} =require("../controller/store")
+const {store,storeData, deleteProduct} =require("../controller/store")
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router.route("/role").get(Role);
 
 
 router.route("/storedata").post(store)
-router.route("/storedata").get(storeData)
-
+router.route("/getstore").get(storeData)
+router.route("/delete/:id").delete(deleteProduct)
 
 module.exports = router;

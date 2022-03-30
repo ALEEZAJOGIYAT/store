@@ -32,9 +32,18 @@ const storeData = async (req, res) => {
     if (error) {
       res.send(error);
     }
-
     res.send(result);
   });
 };
 
-module.exports = { store,storeData };
+
+//delete api
+const deleteProduct=async(req,res)=>{
+  const id=req.params.id
+  // console.log(id)
+  await storeModel.findByIdAndDelete(id)
+  res.send('product is deleted')
+
+}
+
+module.exports = { store,storeData,deleteProduct };
