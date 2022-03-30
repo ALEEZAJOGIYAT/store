@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { Button } from "@mui/material";
 import Lottie from "react-lottie";
 import animationData from "../../lotties/header.json";
+import { useSelector } from "react-redux";
 import { CreateStore } from "../../containers/Store Manager/CreateStore";
 
 // import { useSelector } from "react-redux";
@@ -10,6 +11,10 @@ import { Link, useHistory } from "react-router-dom";
 // import PostJob from "../Pages/storeCreator/PostJob";
 
 export const NavBar = () => {
+  const userData = useSelector((state) => state.addUser);
+
+  // console.log(userData.data[0].data.role,'redux state')
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -21,7 +26,7 @@ export const NavBar = () => {
 
   //   const state = useSelector((state) => state);
   //   const auth = state.auth;
-  const role = "storeCreator";
+  const role = userData?.data[0]?.data?.role
   //   const role = auth?.users?.role;
 
   const [open, setOpen] = useState(false);
@@ -81,13 +86,13 @@ export const NavBar = () => {
             <Lottie options={defaultOptions} height={50} width={50} />
           </Navbar.Brand>
           <Nav className="me-auto">
-            {role === "customer"
+            {role === "Customer"
               ? customer.map((value) => (
                   <Nav.Link as={Link} to={value.to}>
                     {value.name}
                   </Nav.Link>
                 ))
-              : role === "storeCreator"
+              : role === "store Creator"
               ? storeCreator.map((value) => (
                   <Nav.Link as={Link} to={value.to}>
                     {value.name}
@@ -95,7 +100,7 @@ export const NavBar = () => {
                 ))
               : null}
           </Nav>
-          {role === "customer" ? (
+          {role === "Customer" ? (
             <div>
               <Button
                 variant="contained"
@@ -113,7 +118,7 @@ export const NavBar = () => {
                 Logout
               </Button>
             </div>
-          ) : role === "storeCreator" ? (
+          ) : role === "store Creator" ? (
             <>
               <Button
                 variant="contained"

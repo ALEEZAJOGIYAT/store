@@ -7,15 +7,14 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case USERS:
-      const { data, id} = action.payload;
+      const { data} = action.payload;
 
       return {
-        ...state,
+        // ...state,
         data: [
-          ...state.data,
+          // ...state.data,
           {
             data:data,
-            id: id,
           },
         ],
       };

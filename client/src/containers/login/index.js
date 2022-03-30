@@ -22,13 +22,15 @@ import animationData from "../../lotties/sign-up.json";
 import { Theme } from "../../components/theme";
 import { useSelector, useDispatch } from "react-redux";
 import { users } from "../../redux/user/actions";
+import { useHistory } from "react-router-dom";
 
 export const LoginForm = () => {
   const userData = useSelector((state) => state.addUser);
 
-  // console.log(userData?.data?.data?.role[0])
+  console.log(userData.data[0].data.role,'redux state')
 
   const dispatch = useDispatch();
+  const history=useHistory()
 
   const [data, setData] = useState({
     email: "",
@@ -44,7 +46,7 @@ export const LoginForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("data", data);
+    // console.log("data", data);
     // alert("submit Successfully");
     // ali123
     try {
@@ -54,19 +56,28 @@ export const LoginForm = () => {
         },
       };
 
-      axios.post(
-        "http://localhost:4001/user/login",
-        {
-          email: data.email,
-          password: data.password,
-          //          cnicNo: data.cnicNo,
-        },
-        config
-      );
-
-      //      localStorage.setData("userInfo", JSON.stringify(data));
+      axios
+        .post(
+          "http://localhost:4001/user/login",
+          {
+            email: data.email,
+            password: data.password,
+            //          cnicNo: data.cnicNo,
+          },
+          config
+        )
+        .then((response) => {
+          dispatch(users(response.data));
+          console.log(response.data);
+        });
     } catch (err) {
       console.log(err, "error");
+    }
+
+    if(userData.data[0].data.role==='Customer') {
+      history.push('./custhome')
+    } else{
+      history.push('./storehome')
     }
 
     setData({
@@ -74,13 +85,14 @@ export const LoginForm = () => {
       password: "",
       // cnicNo: "",
     });
-    
-    // axios.get("http://localhost:4001/user/role").then((response) => {
-    //   dispatch(users(response.data));
-    //   // console.log(response.data)
-    // });
   };
 
+  useEffect(() => {
+  }, [userData]);
+
+  // axios.get("http://localhost:4001/user/role").then((response) => {
+  //   console.log(response.data);
+  // });
 
   const defaultOptions = {
     loop: true,
@@ -93,20 +105,28 @@ export const LoginForm = () => {
 
   return (
     <div>
-      {userData?.data?.map(({ data, id }, index) => {
+      {/* {userData?.data?.map(({ data, id }, index) => {
         const { email, role } = data;
         return (
           <div>
             <h4>{email}</h4>
           </div>
         );
-      })}
+      })} */}
 
       <Theme />
+      {/* <div>
+        
+      </div> */}
       <Container
         maxWidth="sm"
-        sx={{ mb: 4, backgroundColor: "rgb(17, 54, 63)" }}
+        sx={{
+          mb: 4,
+          // backgroundColor: "rgb(17, 54, 63)"
+        }}
       >
+        <Lottie options={defaultOptions} height={120} width={100} />
+
         {/* <div className="image">
           <img src="./images/aretec.png" alt="logo" />
         </div> */}
@@ -130,7 +150,6 @@ export const LoginForm = () => {
           >
             Login In Here
           </Typography>
-          <Lottie options={defaultOptions} height={120} width={100} />
           <br />
           <br />
 
