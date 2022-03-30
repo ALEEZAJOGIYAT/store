@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 //import CameraIcon from '@mui/icons-material/PhotoCamera';
@@ -17,12 +17,15 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Lottie from "react-lottie";
 import animationData from "../../lotties/header.json";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import  Axios  from "axios";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="./home">
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
@@ -31,11 +34,25 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+//const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
 export const ShowProduct = () => {
+  const [proData, setProData] = useState([]);
+
+  // const storeData=useSelector((state)=>state.storeDetails)
+  // console.log(storeData?.data[0]?.data?.productName)
+
+  const handleDelete = (id) => {
+    //console.log(id)
+    axios.delete(`http://localhost:4001/user/delete/${id}`).then((response) => {
+       console.log(response)
+    }).catch((err)=>{
+      console.log(err)
+    });
+  };
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -44,6 +61,12 @@ export const ShowProduct = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+
+  useEffect(() => {
+    axios.get("http://localhost:4001/user/getstore").then((response) => {
+      setProData(response.data);
+    });
+  }, [proData]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -75,8 +98,8 @@ export const ShowProduct = () => {
           <br />
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {proData?.map((card, index) => (
+              <Grid item key={index} xs={12} sm={6} md={4}>
                 <Card
                   sx={{
                     height: "100%",
@@ -86,27 +109,24 @@ export const ShowProduct = () => {
                 >
                   <CardMedia
                     component="img"
-                    sx={
-                      {
-                        // 16:9
-                        //                      pt: '56.25%',
-                      }
-                    }
                     image="https://source.unsplash.com/random"
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {card.productName}
                     </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography>
+                    <Typography>{card.productDetails}</Typography>
+                    <Typography>{card.productPrice}</Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      onClick={() => handleDelete(card._id)}
+                    >
+                      Delete
+                    </Button>
                   </CardActions>
                 </Card>
               </Grid>

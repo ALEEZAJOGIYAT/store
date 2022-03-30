@@ -1,5 +1,7 @@
 import React, { useState,useEffect } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, } from "react-bootstrap";
+
+// import { Container, Nav, Navbar } from "react-bootstrap";
 import { Button } from "@mui/material";
 import Lottie from "react-lottie";
 import animationData from "../../lotties/header.json";
@@ -140,7 +142,10 @@ export const NavBar = () => {
           ) : null}
         </Container>
       </Navbar>
-        {/* <CreateStore open={open} toggleModal={toggleModal}/> */}
+        <CreateStore open={open} toggleModal={toggleModal}/>
     </div>
   );
 };
+
+
+
