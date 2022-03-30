@@ -1,34 +1,38 @@
-const express=require('express')
-const mongoose=require('mongoose')
+const express = require("express");
+const mongoose = require("mongoose");
 
-const ProductSchema=new mongoose.Schema({
+const StoreSchema = new mongoose.Schema({
+  storeName: {
+    type: String,
+    required: [true, "Select any one type of store"],
+  },
 
-    store_type:{
-        type:String,
-        required:[true,'Select any one type of store']
-    },
-   name:{
-        type:String,
-        required:[true,'Name of product is required']
-    },
-    image:{
-        type:String,
-        required:[true,'Add Image of Product as Sample']
-    },
-    description:{
-        type:String,
-        required:[true,'Description is required']
-    },
-    price:{
-        type:Number,
-        required:[true,'Mention the Price of Product']
-    },
-    quantity:{
-        type:Number,
-        min:1,
-        max:4,
-    }    
-})
+  storeType: {
+    type: String,
+    required: [true, "Select any one type of store"],
+  },
+  productName: {
+    type: String,
+    required: [true, "Name of product is required"],
+  },
+  productImage: {
+    type: String,
+    // required: [true, "Add Image of Product as Sample"],
+  },
+  productDetails: {
+    type: String,
+    required: [true, "Description is required"],
+  },
+  productPrice: {
+    type: Number,
+    required: [true, "Mention the Price of Product"],
+  },
+  productQuantity: {
+    type: Number,
+    // min: 1,
+    // max: 4,
+  },
+});
 
-const productModel= mongoose.model('user',ProductSchema)
-module.exports= productModel
+const storeModel = mongoose.model("store", StoreSchema);
+module.exports = storeModel;

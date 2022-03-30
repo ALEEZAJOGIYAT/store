@@ -50,22 +50,26 @@ const authUser = async (req, res) => {
   const auth = await userModel.findOne({ email });
 
   if (auth && (await auth.matchPassword(password))) {
-    res.json({
-      _id: auth.id,
-      cnicNo: auth.cnicNo,
-      firstName: auth.firstName,
-      lastName: auth.lastName,
-      email: auth.email,
-      address: auth.address,
-      phoneNo: auth.phoneNo,
-      role: auth.role,
-    });
+    res.send(auth)
+
+    // res.json({
+    //   _id: auth.id,
+    //   cnicNo: auth.cnicNo,
+    //   firstName: auth.firstName,
+    //   lastName: auth.lastName,
+    //   email: auth.email,
+    //   address: auth.address,
+    //   phoneNo: auth.phoneNo,
+    //   role: auth.role,
+    // });
   } else {
     res.status(400);
     throw new Error("Invalid Email or Password");
   }
 };
 
+
+//get API
 const Role = (req, res) => {
   userModel.find({}, (error, result) => {
     if (error) {

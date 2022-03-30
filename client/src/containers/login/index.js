@@ -20,14 +20,14 @@ import axios from "axios";
 import Lottie from "react-lottie";
 import animationData from "../../lotties/sign-up.json";
 import { Theme } from "../../components/theme";
-import { useSelector, useDispatch } from "react-redux";
 import { users } from "../../redux/user/actions";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export const LoginForm = () => {
   const userData = useSelector((state) => state.addUser);
 
-  console.log(userData.data[0].data.role,'redux state')
+  // console.log(userData.data[0].data.role,'redux state')
 
   const dispatch = useDispatch();
   const history=useHistory()

@@ -14,6 +14,9 @@ import { MenuItem } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
+import axios from "axios";
+import { useSelector,useDispatch } from "react-redux";
+import { storeData } from "../../redux/storeData/actions";
 
 const style = {
   position: "absolute",
@@ -28,7 +31,11 @@ const style = {
 };
 
 export const CreateStore = ({ open, toggleModal }) => {
+  const userData = useSelector((state) => state.addUser);
+
   const history = useHistory();
+  const dispatch=useDispatch()
+
   const type = [
     {
       value: "Clothes",
@@ -68,6 +75,10 @@ export const CreateStore = ({ open, toggleModal }) => {
   //for image
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const[url,setUrl]=useState('')
+
+
+  //to post file in api u need to use formdata as required in documentations
 
   useEffect(() => {
     if (selectedImage) {
@@ -76,28 +87,81 @@ export const CreateStore = ({ open, toggleModal }) => {
   }, [selectedImage]);
 
   const handleChange = (e) => {
-    setStoreDetails({ ...storeDetails, [e.target.name]: [e.target.value] });
+    setStoreDetails({ ...storeDetails, [e.target.name]: e.target.value });
   };
 
   const addProduct = (e) => {
     e.preventDefault();
     console.log(storeDetails, "store data--->");
     setShow(true);
-    history.push('./product')
+
+    const imageUp=new FormData()
+    imageUp.append('file',selectedImage)
+    imageUp.append("upload_preset","store-clone")
+    imageUp.append("cloud_name","dzfcrzmzc")
+
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      axios
+        .post(
+          "http://localhost:4001/user/storedata",
+          {
+            storeName:storeDetails.storeName,
+            storeType:storeDetails.storeType,
+            productName:storeDetails.productName,
+            productPrice:storeDetails.productPrice,
+            productDetails:storeDetails.productDetails,
+            productImage:url
+          },
+          config
+        )
+        .then((response) => {
+        dispatch(storeData(response.data));
+          console.log(response.data);
+        });
+        
+
+        fetch("https://api.cloudinary.com/v1_1/dzfcrzmzc/image/upload",{
+          method:"post",
+          body:imageUp
+        }).
+        then((response)=>{
+          response.json()
+        })
+        .then((data)=>{
+          setUrl(data.url)
+          console.log(data)
+        }).catch((err)=>{
+          console.log(err)
+        })
+
+
+      //      localStorage.setData("userInfo", JSON.stringify(data));
+    } catch (er) {
+      console.log("er", er);
+    }
 
     setStoreDetails({
-      name: "",
-      type: "",
+      storeName: "",
+      storeType: "",
       productName: "",
       productPrice: "",
       productDetails: "",
-    });
+      });
+      setSelectedImage('')
     // history.push("/addproduct");
   };
 
+  useEffect(() => {}, [userData]);
+
+
   return (
     <div>
-      
       <Container
         maxWidth="sm"
         sx={{

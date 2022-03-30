@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Button } from "@mui/material";
 import Lottie from "react-lottie";
@@ -26,7 +26,7 @@ export const NavBar = () => {
 
   //   const state = useSelector((state) => state);
   //   const auth = state.auth;
-  const role = userData?.data[0]?.data?.role
+  const role = userData?.data[0]?.data?.role;
   //   const role = auth?.users?.role;
 
   const [open, setOpen] = useState(false);
@@ -48,7 +48,7 @@ export const NavBar = () => {
   const storeCreator = [
     {
       to: "./createStore",
-      name: "Stores",
+      name: "Dashboard",
     },
     {
       to: "./product",
@@ -77,12 +77,13 @@ export const NavBar = () => {
       name: "Profile",
     },
   ];
+  useEffect(() => {}, [userData]);
 
   return (
     <div>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="./vacancies">
+          <Navbar.Brand href="./home">
             <Lottie options={defaultOptions} height={50} width={50} />
           </Navbar.Brand>
           <Nav className="me-auto">
@@ -92,7 +93,7 @@ export const NavBar = () => {
                     {value.name}
                   </Nav.Link>
                 ))
-              : role === "store Creator"
+              : role === "Store Creator"
               ? storeCreator.map((value) => (
                   <Nav.Link as={Link} to={value.to}>
                     {value.name}
@@ -113,18 +114,19 @@ export const NavBar = () => {
               <Button
                 variant="contained"
                 onClick={showModal}
-                sx={{ backgroundColor: "rgb(55, 139, 139) " }}
+                sx={{ backgroundColor: "rgb(55, 139, 139) ", marginLeft: 5 }}
               >
                 Logout
               </Button>
             </div>
-          ) : role === "store Creator" ? (
+          ) : role === "Store Creator" ? (
             <>
               <Button
                 variant="contained"
                 onClick={showModal}
                 sx={{ backgroundColor: "rgb(55, 139, 139) " }}
               >
+                {/* <CreateStore /> */}
                 Create Store
               </Button>
               <Button
@@ -138,6 +140,7 @@ export const NavBar = () => {
           ) : null}
         </Container>
       </Navbar>
+        {/* <CreateStore open={open} toggleModal={toggleModal}/> */}
     </div>
   );
 };

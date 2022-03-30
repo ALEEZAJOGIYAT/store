@@ -20,10 +20,18 @@ import axios from "axios";
 import Lottie from "react-lottie";
 import animationData from "../../lotties/sign-up.json";
 import { Theme } from "../../components/theme";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { newUsers } from "../../redux/user/actions";
+
 import { alignProperty } from "@mui/material/styles/cssUtils";
 
 const RegistrationForm = () => {
   const theme = useTheme();
+  const userData = useSelector((state) => state.addUser);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const [Input, setInput] = useState({
     cnicNo: "",
@@ -53,25 +61,31 @@ const RegistrationForm = () => {
           "Content-type": "application/json",
         },
       };
-      axios.post(
-        "http://localhost:4001/user/add",
-        {
-          cnicNo: Input.cnicNo,
-          firstName: Input.firstName,
-          lastName: Input.lastName,
-          email: Input.email,
-          address: Input.address,
-          phoneNo: Input.phoneNo,
-          password: Input.password,
-          role: Input.role,
-        },
-        config
-      );
+      axios
+        .post(
+          "http://localhost:4001/user/add",
+          {
+            cnicNo: Input.cnicNo,
+            firstName: Input.firstName,
+            lastName: Input.lastName,
+            email: Input.email,
+            address: Input.address,
+            phoneNo: Input.phoneNo,
+            password: Input.password,
+            role: Input.role,
+          },
+          config
+        )
+        // .then((response) => {
+        // dispatch(newUsers(response.data));
+        //   console.log(response.data);
+        // });
 
       //      localStorage.setData("userInfo", JSON.stringify(data));
     } catch (er) {
       console.log("er", er);
     }
+    history.push('./login')
 
     setInput({
       cnicNo: "",
@@ -107,12 +121,14 @@ const RegistrationForm = () => {
       <Theme />
       <Container
         maxWidth="sm"
-        sx={{ mb: 4, backgroundColor: "rgb(17, 54, 63)" }}
+        sx={{ mb: 4,
+          // backgroundColor: "rgb(17, 54, 63)" 
+          }}
       >
         {/* <div className="image">
           <img src="./images/aretec.png" alt="logo" />
         </div> */}
-        <Lottie options={defaultOptions} height={120} width={100} />
+//        <Lottie options={defaultOptions} height={120} width={100} />
 
         <Paper
           sx={{
