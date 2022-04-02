@@ -43,7 +43,12 @@ const deleteProduct=async(req,res)=>{
   // console.log(id)
   await storeModel.findByIdAndDelete(id)
   res.send('product is deleted')
-
 }
+
+//add to cart item
+// const addToCart=async(req,res)=>{
+//   const id=req.params.id
+//   await
+// }
 
 module.exports = { store,storeData,deleteProduct };

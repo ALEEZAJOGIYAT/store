@@ -13,6 +13,8 @@ router.route("/role").get(Role);
 
 
 router.route("/storedata").post(store)
+// router.route("/adddata/:id").post(store)
+
 router.route("/getstore").get(storeData)
 router.route("/delete/:id").delete(deleteProduct)
 

@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 // import Products from "./Products";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 export const StoreHome = () => {
+
   const [storeData, setStoreData] = useState([]);
 
   const history=useHistory()

@@ -44,8 +44,12 @@ export const NavBar = () => {
   };
 
   const handleLogout = () => {
-    history.push("/");
+    history.push("/login");
   };
+
+  const handleCart=()=>{
+    history.push('./checkout')
+  }
 
   const storeCreator = [
     {
@@ -57,18 +61,18 @@ export const NavBar = () => {
       name: "Products",
     },
     {
-      to: "./profile",
+      to: "./storeprofile",
       name: "Profile",
     },
   ];
   const customer = [
     {
       to: "./dashboard",
-      name: "Stores",
+      name: "Dashboard",
     },
     {
       to: "./purchaseproducts",
-      name: "Purchased Products",
+      name: "Shopping",
     },
     // {
     //   to: "./appliedjobs",
@@ -107,7 +111,7 @@ export const NavBar = () => {
             <div>
               <Button
                 variant="contained"
-                onClick={showModal}
+                onClick={handleCart}
                 sx={{ backgroundColor: "rgb(55, 139, 139) " }}
               >
                 Cart
@@ -115,7 +119,7 @@ export const NavBar = () => {
 
               <Button
                 variant="contained"
-                onClick={showModal}
+                onClick={handleLogout}
                 sx={{ backgroundColor: "rgb(55, 139, 139) ", marginLeft: 5 }}
               >
                 Logout
